@@ -34,9 +34,9 @@ def get_weather(city):
     weather = res['data'][0]
     return weather
 
-def get_count(born_date):
-    delta = today - datetime.strptime(born_date, "%Y-%m-%d")
-    return delta.days
+#def get_count(born_date):
+#    delta = today - datetime.strptime(born_date, "%Y-%m-%d")
+#    return delta.days
 
 def get_love(love_date):
     delta = today - datetime.strptime(love_date, "%Y-%m-%d")
@@ -91,7 +91,7 @@ for user_info in data:
         'value': weather['tem2'], 
         'color': '#01847F'
         }
-    data['born_days'] = {
+    data['love_days'] = {
         'value': get_love(love_date), 
         'color': get_random_color()
         }
