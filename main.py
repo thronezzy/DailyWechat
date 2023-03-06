@@ -39,7 +39,7 @@ def get_count(born_date):
     return delta.days
 
 def get_love(love_date):
-    delta = today - datetime.strptime(born_date, "%Y-%m-%d")
+    delta = today - datetime.strptime(love_date, "%Y-%m-%d")
     return delta.days
 
 def get_birthday(birthday):
