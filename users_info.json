@@ -1,18 +1,11 @@
 {
   "data": [
     {
-      "user_name": "小樱老师",
-      "user_id": "opE-e5zENhsezsCHDlkYHaPiOvts",
+      "user_name": "zzy",
+      "user_id": "opE-e57uybZtXcbCClpsHzLGYYEk",
       "born_date": "1998-04-21",
       "love_date": "2022-01-30",
       "city": "南阳"
-    },
-    {
-      "user_name": "zzy",
-      "user_id": "oEqYm6pD7oplyKNjPEQEshtnskt4",
-      "born_date": "1998-07-11",
-      "love_date": "2022-01-30",
-      "city": "北京"
     }
   ]
 }
