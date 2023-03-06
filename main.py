@@ -38,6 +38,9 @@ def get_count(born_date):
     delta = today - datetime.strptime(born_date, "%Y-%m-%d")
     return delta.days
 
+def get_love(love_date):
+    delta = today - datetime.strptime(born_date, "%Y-%m-%d")
+    return delta.days
 
 def get_birthday(birthday):
     nextdate = datetime.strptime(str(today.year) + "-" + birthday, "%Y-%m-%d")
@@ -56,6 +59,7 @@ num = 0
 for user_info in data:
     born_date = user_info['born_date']
     birthday = born_date[5:]
+    love_date = user_info['love_date']
     city = user_info['city']
     user_id = user_info['user_id']
     name=user_info['user_name'].upper()
@@ -88,7 +92,7 @@ for user_info in data:
         'color': '#01847F'
         }
     data['born_days'] = {
-        'value': get_count(born_date), 
+        'value': get_love(love_date), 
         'color': get_random_color()
         }
     data['birthday_left'] = {
