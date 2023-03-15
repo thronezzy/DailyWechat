@@ -48,6 +48,12 @@ def get_birthday(birthday):
         nextdate = nextdate.replace(year=nextdate.year + 1)
     return (nextdate - today).days
 
+def get_kaoshi(kaoshi):
+    nextdate = datetime.strptime(str(today.year) + "-" + kaoshi, "%Y-%m-%d")
+    if nextdate < today:
+        nextdate = nextdate.replace(year=nextdate.year + 1)
+    return (nextdate - today).days
+
 client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
 
@@ -59,6 +65,8 @@ num = 0
 for user_info in data:
     born_date = user_info['born_date']
     birthday = born_date[5:]
+    kaoshi_date = user_info['kaoshi_date']
+    kaoshi = born_date[5:]
     love_date = user_info['love_date']
     city = user_info['city']
     user_id = user_info['user_id']
@@ -97,6 +105,10 @@ for user_info in data:
         }
     data['birthday_left'] = {
         'value': get_birthday(birthday), 
+        'color': get_random_color()
+        }
+    data['kaoshi_left'] = {
+        'value': get_kaoshi(kaoshi), 
         'color': get_random_color()
         }
     data['air'] = {
