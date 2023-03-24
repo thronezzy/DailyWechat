@@ -29,7 +29,7 @@ def get_random_color():
     return "#%06x" % random.randint(0, 0xFFFFFF)
 
 def get_weather(city):
-    url = "https://v0.yiketianqi.com/api?unescape=1&version=v91&appid=43656176&appsecret=I42og6Lm&city=" + city
+    url = "https://v0.yiketianqi.com/api?unescape=1&version=v91&appid=35524118&appsecret=xRwk60Dd&city=" + city
     res = requests.get(url).json()
     weather = res['data'][0]
     return weather
