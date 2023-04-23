@@ -66,7 +66,7 @@ for user_info in data:
     born_date = user_info['born_date']
     birthday = born_date[5:]
     kaoshi_date = user_info['kaoshi_date']
-    kaoshi = born_date[5:]
+    kaoshi = kaoshi_date[5:]
     love_date = user_info['love_date']
     city = user_info['city']
     user_id = user_info['user_id']
