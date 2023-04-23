@@ -49,10 +49,10 @@ def get_birthday(birthday):
     return (nextdate - today).days
 
 def get_kaoshi(kaoshi):
-    nextdate = datetime.strptime(str(today.year) + "-" + kaoshi, "%Y-%m-%d")
-    if nextdate < today:
-        nextdate = nextdate.replace(year=nextdate.year + 1)
-    return (nextdate - today).days
+    nextdate1 = datetime.strptime(str(today.year) + "-" + kaoshi, "%Y-%m-%d")
+    if nextdate1 < today:
+        nextdate1 = nextdate.replace(year=nextdate.year + 1)
+    return (nextdate1 - today).days
 
 client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
