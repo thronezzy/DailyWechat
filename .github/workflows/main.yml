@@ -11,12 +11,12 @@ jobs:
 
     steps:
     - name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
       with:
         ref: master
 
     - name: sender
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v2
       with:
         python-version: '3.x'
         architecture: 'x64'
