@@ -9,9 +9,7 @@ import json
 nowtime = datetime.utcnow() + timedelta(hours=8)  
 today = datetime.strptime(str(nowtime.date()), "%Y-%m-%d")
 
-app_id = os.getenv("APP_ID")
-app_secret = os.getenv("APP_SECRET")
-template_id = os.getenv("TEMPLATE_ID")
+
 
 def get_time():
     dictDate = {'Monday': '星期一', 'Tuesday': '星期二', 'Wednesday': '星期三', 'Thursday': '星期四',
@@ -21,8 +19,8 @@ def get_time():
 
 def get_words():
     words = requests.get('https://api.shadiao.pro/chp')
-#    if words.status_code != 200:
-#        return get_words()
+    if words.status_code != 200:
+        return get_words()
     return words.json()['data']['text']
 
 def get_random_color():
@@ -54,81 +52,89 @@ def get_kaoshi(kaoshi):
         nextdate1 = nextdate.replace(year=nextdate.year + 1)
     return (nextdate1 - today).days
 
-client = WeChatClient(app_id, app_secret)
-wm = WeChatMessage(client)
 
-f = open("./users_info.json", encoding="utf-8")
-js_text = json.load(f)
-f.close()
-data = js_text['data']
-num = 0
-for user_info in data:
-    born_date = user_info['born_date']
-    birthday = born_date[5:]
-    kaoshi_date = user_info['kaoshi_date']
-    kaoshi = kaoshi_date[5:]
-    love_date = user_info['love_date']
-    city = user_info['city']
-    user_id = user_info['user_id']
-    name=user_info['user_name'].upper()
+if __name__ == '__main__':
+    app_id = os.getenv("APP_ID")
+    app_secret = os.getenv("APP_SECRET")
+    template_id = os.getenv("TEMPLATE_ID")
     
-    weather= get_weather(city)
-
-    data = dict()
-    data['time'] = {
-        'value': get_time(), 
-        'color':'#470024'
-        }
-    data['words'] = {
-        'value': get_words(), 
-        'color': get_random_color()
-        }
-    data['weather'] = {
-        'value': weather['wea'], 
-        'color': '#002fa4'
-        }
-    data['city'] = {
-        'value': city, 
-        'color': get_random_color()
-        }
-    data['tem_high'] = {
-        'value': weather['tem1'], 
-        'color': '#D44848'
-        }
-    data['tem_low'] = {
-        'value': weather['tem2'], 
-        'color': '#01847F'
-        }
-    data['love_days'] = {
-        'value': get_love(love_date), 
-        'color': get_random_color()
-        }
-    data['birthday_left'] = {
-        'value': get_birthday(birthday), 
-        'color': get_random_color()
-        }
-    data['kaoshi_left'] = {
-        'value': get_kaoshi(kaoshi), 
-        'color': get_random_color()
-        }
-    data['air'] = {
-        'value': weather['air_level'], 
-        'color': get_random_color()
-        }
-    data['wind'] = {
-        'value': weather['win'][0], 
-        'color': get_random_color()
-        }
-    data['name'] = {
-        'value': name, 
-        'color': get_random_color()
-        }
-    data['uv'] = {
-        'value': weather['uvDescription'], 
-        'color': get_random_color()
-        }
+    client = WeChatClient(app_id, app_secret)
+    wm = WeChatMessage(client)
     
-    res = wm.send_template(user_id, template_id, data)
-    print(res)
-    num += 1
-print(num)
+    f = open("./users_info.json", encoding="utf-8")
+    js_text = json.load(f)
+    f.close()
+    data = js_text['data']
+    num = 0
+    
+    words = get_words()
+    out_time=get_time()
+    print(words, out_time)
+    
+    for user_info in data:
+        born_date = user_info['born_date']
+        birthday = born_date[5:]
+        kaoshi_date = user_info['kaoshi_date']
+        kaoshi = kaoshi_date[5:]
+        love_date = user_info['love_date']
+        city = user_info['city']
+        user_id = user_info['user_id']
+        name=user_info['user_name'].upper()
+        
+        weather= get_weather(city)
+    
+        data = dict()
+        data['time'] = {
+            'value': get_time(), 
+            'color':'#470024'
+            }
+        data['words'] = {'value': words}
+        data['weather'] = {
+            'value': weather['wea'], 
+            'color': '#002fa4'
+            }
+        data['city'] = {
+            'value': city, 
+            'color': get_random_color()
+            }
+        data['tem_high'] = {
+            'value': weather['tem1'], 
+            'color': '#D44848'
+            }
+        data['tem_low'] = {
+            'value': weather['tem2'], 
+            'color': '#01847F'
+            }
+        data['love_days'] = {
+            'value': get_love(love_date), 
+            'color': get_random_color()
+            }
+        data['birthday_left'] = {
+            'value': get_birthday(birthday), 
+            'color': get_random_color()
+            }
+        data['kaoshi_left'] = {
+            'value': get_kaoshi(kaoshi), 
+            'color': get_random_color()
+            }
+        data['air'] = {
+            'value': weather['air_level'], 
+            'color': get_random_color()
+            }
+        data['wind'] = {
+            'value': weather['win'][0], 
+            'color': get_random_color()
+            }
+        data['name'] = {
+            'value': name, 
+            'color': get_random_color()
+            }
+        data['uv'] = {
+            'value': weather['uvDescription'], 
+            'color': get_random_color()
+            }
+        
+        res = wm.send_template(user_id, template_id, data)
+        print(res)
+        num += 1
+    print(f"成功发送{num}条信息")
